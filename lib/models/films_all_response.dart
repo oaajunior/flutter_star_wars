@@ -6,7 +6,7 @@ class FilmsAllResponse{
   String director;
   String releaseDate;
   String episodeIdRoman;
-  String imageID;
+  String imageNetwork;
 
   FilmsAllResponse.fromMappedJson(Map<String, dynamic> json) {
     

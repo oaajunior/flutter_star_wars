@@ -1,8 +1,7 @@
-
-
 import './characters_list_films.dart';
 import '../../models/characters_all_response.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CharacterDetailedScreen extends StatelessWidget {
   static const routeName = '/characters_detailed_screen';
@@ -24,10 +23,11 @@ class CharacterDetailedScreen extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(10),
                   width: 200,
-                  child: Image.asset(
-                    'assets/images/characters/${character.first.imageID}.jpg',
-                    fit: BoxFit.contain,
-                  ),
+                  child:FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: character.first.imageNetwork,
+                  fit: BoxFit.contain,
+                ),
                 ),
                 Expanded(
                   child: Container(
@@ -46,12 +46,20 @@ class CharacterDetailedScreen extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        buildText(
-                            'Height: ${character.first.height}cm', 16, false),
+                        buildText('Eye Color: ${character.first.eyeColor}', 16, false),
                         SizedBox(
                           height: 5,
                         ),
-                        buildText('Mass: ${character.first.mass}kg', 16, false),
+                        buildText('Hair Color: ${character.first.hairColor}', 16, false),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        buildText(
+                            'Height: ${character.first.height} cm', 16, false),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        buildText('Mass: ${character.first.mass} kg', 16, false),
                         SizedBox(
                           height: 5,
                         ),

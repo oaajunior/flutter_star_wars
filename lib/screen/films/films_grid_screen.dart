@@ -6,7 +6,7 @@ import './films_grid_item.dart';
 
 class FilmsGridScreen extends StatefulWidget {
   
-  StarWarsService service = StarWarsServiceImpl();
+  final StarWarsService service = StarWarsServiceImpl();
   @override
   _FilmsGridScreenState createState() => _FilmsGridScreenState();
   
@@ -58,9 +58,8 @@ initState(){
             List<String> split;
             split = film["url"].toString().split("/");
             split.removeLast();
-
             filmResponse.id = split.last;
-            filmResponse.imageID = split.last;
+            filmResponse.imageNetwork = widget.service.networkImageID(type: "films/", id: split.last);
            }
           filmsList.add(filmResponse);
         }

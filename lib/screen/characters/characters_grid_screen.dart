@@ -5,7 +5,7 @@ import '../../services/starwars_service.dart';
 import 'characters_grid_item.dart';
 
 class CharactersGridScreen extends StatefulWidget {
-  StarWarsService service = StarWarsServiceImpl();
+  final StarWarsService service = StarWarsServiceImpl();
 
   @override
   _CharactersGridScreenState createState() => _CharactersGridScreenState();
@@ -116,7 +116,7 @@ class _CharactersGridScreenState extends State<CharactersGridScreen> {
             split = character["url"].toString().split("/");
             split.removeLast();
             characterResponse.id = split.last;
-            characterResponse.imageID = split.last;
+            characterResponse.imageNetwork = widget.service.networkImageID(type: "characters/", id: split.last);
           }
 
           characterResponse.films = [];

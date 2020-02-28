@@ -1,6 +1,7 @@
 class FilmsResponse {
   String title;
   int episodeId;
+  String imageNetwork;
 
   FilmsResponse.fromMappedJson(Map<String, dynamic> json) {
     title = json['title'] ?? "";

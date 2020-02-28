@@ -1,6 +1,7 @@
 import '../../models/characters_all_response.dart';
 import 'package:flutter/material.dart';
 import 'characters_detailed_screen.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CharactersGridItem extends StatelessWidget {
   final CharactersAllResponse character;
@@ -23,8 +24,9 @@ class CharactersGridItem extends StatelessWidget {
               Container(
                 width: 200,
                 padding: EdgeInsets.all(5),
-                child: Image.asset(
-                  "assets/images/characters/${character.imageID}.jpg",
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: character.imageNetwork,
                   fit: BoxFit.contain,
                 ),
               ),

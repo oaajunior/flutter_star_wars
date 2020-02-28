@@ -29,7 +29,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   
-  lazy_load_scrollview: 1.0.1  
+  transparent_image: ^1.0.0 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -46,8 +46,6 @@ flutter:
   assets:
     - assets/images/
     - assets/images/cover/
-    - assets/images/films/
-    - assets/images/characters/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -8,7 +8,7 @@ class CharactersAllResponse{
   String eyeColor;
   String gender;
   List<int> films;
-  String imageID;
+  String imageNetwork;
 
   CharactersAllResponse.fromMappedJson(Map<String, dynamic> json) {
     

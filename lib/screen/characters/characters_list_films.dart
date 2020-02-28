@@ -1,12 +1,13 @@
 import '../../models/films_response.dart';
 import '../../services/starwars_service.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'dart:convert';
 
 class CharacteresListFilms extends StatefulWidget {
   final filmID;
   CharacteresListFilms(this.filmID);
-  StarWarsService service = StarWarsServiceImpl();
+  final StarWarsService service = StarWarsServiceImpl();
 
   @override
   _CharacteresListFilmsState createState() => _CharacteresListFilmsState();
@@ -31,16 +32,16 @@ class _CharacteresListFilmsState extends State<CharacteresListFilms> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(2),
-              child: Image.asset(
-                "assets/images/films/${widget.filmID.toString()}.jpg",
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: filmResponse.imageNetwork == null ? "" : filmResponse.imageNetwork,
                 fit: BoxFit.contain,
               ),
             ),
             Container(
-              //padding: EdgeInsets.all(5),
               color: Colors.white,
               child: Text(
-                'Episode ${filmResponse.episodeId == null? "" : widget.service.convertToRoman(filmResponse.episodeId)}: ${filmResponse.title == null? "" : filmResponse.title}',
+                'Episode ${filmResponse.episodeId == null ? "" : widget.service.convertToRoman(filmResponse.episodeId)}: ${filmResponse.title == null ? "" : filmResponse.title}',
                 style: TextStyle(
                   fontSize: 11,
                 ),
@@ -55,9 +56,13 @@ class _CharacteresListFilmsState extends State<CharacteresListFilms> {
   Future<void> _feedDataSource(int filmId) async {
     await widget.service.fetchFilmsByID(id: filmId).then((response) {
       var json = jsonDecode(response.body);
+      
       if (json != null) {
+        var tempFilm = FilmsResponse.fromMappedJson(json);
+        tempFilm.imageNetwork = widget.service
+            .networkImageID(type: "films/", id: filmId.toString());
         setState(() {
-          filmResponse = FilmsResponse.fromMappedJson(json);
+          filmResponse = tempFilm;
         });
       }
     });

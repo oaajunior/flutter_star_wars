@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import '../../models/films_all_response.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class DetailedFilmScreen extends StatelessWidget {
   static const routeName = '/detailed_film_screen';
@@ -20,8 +21,11 @@ class DetailedFilmScreen extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(10),
                   width: 200,
-                  child: Image.asset('assets/images/films/${film.first.imageID}.jpg',
-                      fit: BoxFit.contain,),
+                  child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: film.first.imageNetwork,
+                  fit: BoxFit.contain,
+                ),
                 ),
                 Expanded(
                   child: Container(
