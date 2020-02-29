@@ -2,13 +2,14 @@ import 'package:http/http.dart' as http;
 
 class BaseService {
   String baseURL = "https://swapi.co/api/";
-  String baseURLImage = "https://raw.githubusercontent.com/oaajunior/flutter_project_images/master/images/";
+  String baseURLImage =
+      "https://raw.githubusercontent.com/oaajunior/flutter_project_images/master/images/";
 
   String formURL(String endpoint) {
     return "$baseURL$endpoint";
   }
 
-  String fromURLImage(String endpoint){
+  String fromURLImage(String endpoint) {
     return "$baseURLImage$endpoint";
   }
 }
@@ -16,6 +17,8 @@ class BaseService {
 abstract class StarWarsService {
   Future<http.Response> fetchAllFilms();
   Future<http.Response> fetchFilmsByID({int id});
+  Future<http.Response> fetchFilmsBySearch({String name});
+  Future<http.Response> fetchCharactersBySearch({String name});
   Future<http.Response> fetchAllCharacters(String nextPage);
   Future<http.Response> fetchCharacterID({String id});
   String networkImageID({String type, String id});
@@ -52,6 +55,16 @@ class StarWarsServiceImpl extends BaseService implements StarWarsService {
   @override
   Future<http.Response> fetchCharacterID({String id}) {
     return http.get(formURL("people/$id/"));
+  }
+
+  @override
+  Future<http.Response> fetchFilmsBySearch({String name}) {
+    return http.get(formURL("films/?search=$name"));
+  }
+
+  @override
+  Future<http.Response> fetchCharactersBySearch({String name}) {
+    return http.get(formURL("people/?search=$name"));
   }
 
   @override

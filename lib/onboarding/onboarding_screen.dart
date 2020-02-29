@@ -18,8 +18,8 @@ class OnboardingScreen extends StatelessWidget {
       )),
       OnboardingScreenChild(
           model: OnboardingModel(
-        mainTitle: "All Films",
-        secondaryTitle: "In this App you can find about all films",
+        mainTitle: "Films and Characters",
+        secondaryTitle: "In this App you can find about everything",
         imageName: "assets/images/cover/guerra.png",
         shouldPresentButton: false,
       )),

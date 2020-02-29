@@ -18,8 +18,8 @@ class _CharacteresListFilmsState extends State<CharacteresListFilms> {
 
   @override
   initState() {
-    _feedDataSource(widget.filmID);
     super.initState();
+    _feedDataSource(widget.filmID);
   }
 
   @override
@@ -32,11 +32,13 @@ class _CharacteresListFilmsState extends State<CharacteresListFilms> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(2),
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: filmResponse.imageNetwork == null ? "" : filmResponse.imageNetwork,
-                fit: BoxFit.contain,
-              ),
+              child: filmResponse.imageNetwork == null
+                  ? Text("")
+                  : FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: filmResponse.imageNetwork,
+                      fit: BoxFit.contain,
+                    ),
             ),
             Container(
               color: Colors.white,
@@ -56,7 +58,7 @@ class _CharacteresListFilmsState extends State<CharacteresListFilms> {
   Future<void> _feedDataSource(int filmId) async {
     await widget.service.fetchFilmsByID(id: filmId).then((response) {
       var json = jsonDecode(response.body);
-      
+
       if (json != null) {
         var tempFilm = FilmsResponse.fromMappedJson(json);
         tempFilm.imageNetwork = widget.service
