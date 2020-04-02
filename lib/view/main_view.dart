@@ -107,7 +107,7 @@ class _MainViewState extends State<MainView> {
         onTap: _selectPage,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.category),
+            icon: Icon(Icons.movie),
             title: Text('Films'),
           ),
           BottomNavigationBarItem(

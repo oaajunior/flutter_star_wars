@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import '../../services/starwars_service.dart';
 import '../../models/characters/characters_model.dart';
+import '../../utils/loading_status.dart';
 import '../../utils/util.dart';
 
 class CharactersViewModel extends ChangeNotifier {
@@ -11,34 +12,38 @@ class CharactersViewModel extends ChangeNotifier {
   var isNextPage = true;
   var isPreviousPage = false;
   List<CharactersModel> dataSource = [];
+  var loadingStatus = LoadingStatus.searching;
 
-  Future<void> feedDataSource(ScrollController controller, {String searchCharacter = ""}) async {
-    
+  Future<void> feedDataSource(ScrollController controller,
+      {String searchCharacter = ""}) async {
+    loadingStatus = LoadingStatus.searching;
     if (isPreviousPage && previousPage != null) {
       nextPage = previousPage;
     }
 
-    final response = (searchCharacter != null && searchCharacter.isNotEmpty)  
+    final response = (searchCharacter != null && searchCharacter.isNotEmpty)
         ? await service.fetchCharactersBySearch(name: searchCharacter)
         : await service.fetchAllCharacters(page: nextPage);
     var json = jsonDecode(response.body);
 
-    if (json["next"] != null) {
+    if (json["next"] != null && !json["next"].toString().contains("search")) {
       var pageAdress = json["next"];
       var split = pageAdress.toString().split("/");
       nextPage = split.last;
     }
 
-    if (json["previous"] != null) {
+    if (json["previous"] != null &&
+        !json["previous"].toString().contains("search")) {
       var pageAdress = json["previous"];
       var split = pageAdress.toString().split("/");
       previousPage = split.last;
     }
 
     List<CharactersModel> charactersList = [];
-    var list = json["results"];
+    Iterable list = json["results"];
 
-    if (list != null) {
+    if (list != null && list.isNotEmpty) {
+      loadingStatus = LoadingStatus.completed;
       for (var character in list) {
         var characterResponse = CharactersModel.fromMappedJson(character);
 
@@ -50,7 +55,7 @@ class CharactersViewModel extends ChangeNotifier {
           characterResponse.imageNetwork =
               Util.networkImageID(type: "characters/", id: split.last);
         }
-        
+
         characterResponse.films = [];
         if (character["films"] != null) {
           for (var film in character["films"]) {
@@ -64,8 +69,12 @@ class CharactersViewModel extends ChangeNotifier {
         charactersList.add(characterResponse);
       }
       dataSource = charactersList;
-      controller.jumpTo(0.5);
-      notifyListeners();
+      if(controller.hasClients) controller.jumpTo(0.5);
+  
+    } else {
+      dataSource = [];
+      loadingStatus = LoadingStatus.empty;
     }
+    notifyListeners();
   }
 }

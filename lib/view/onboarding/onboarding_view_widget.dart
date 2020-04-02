@@ -21,7 +21,7 @@ class OnboardingViewWidget extends StatelessWidget {
           child: null,
         ),
         Container(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withOpacity(0.5),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,

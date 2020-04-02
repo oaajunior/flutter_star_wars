@@ -5,10 +5,10 @@ class UrlHelper {
       "https://raw.githubusercontent.com/oaajunior/flutter_project_images/master/images/";
 
   static String formURL(String endpoint) {
-    return "$BASE_URL$endpoint";
+    return "${UrlHelper.BASE_URL}$endpoint";
   }
 
   static String fromURLImage(String endpoint) {
-    return "$BASE_URL_IMAGE$endpoint";
+    return "${UrlHelper.BASE_URL_IMAGE}$endpoint";
   }
 }
