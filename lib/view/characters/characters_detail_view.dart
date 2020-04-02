@@ -1,14 +1,17 @@
-import './characters_list_films.dart';
-import '../../models/characters_all_response.dart';
+import 'package:app_star_wars/view_model/characters/characters_list_films_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
+import './characters_list_films_view.dart';
+import '../../models/characters/characters_model.dart';
 
-class CharacterDetailedScreen extends StatelessWidget {
+
+class CharacterDetailView extends StatelessWidget {
   static const routeName = '/characters_detailed_screen';
 
   @override
   Widget build(BuildContext context) {
-    final Set<CharactersAllResponse> character =
+    final Set<CharactersModel> character =
         ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
@@ -97,8 +100,10 @@ class CharacterDetailedScreen extends StatelessWidget {
                         childAspectRatio: 1 / 1.8,  
                         padding: EdgeInsets.all(8),
                         children: character.first.films.map((filmID) {
-                          return CharacteresListFilms(filmID);
-                        }).toList(),
+                          return ListenableProvider(
+                            create: (context) => CharactersListFilmsViewModel(),
+                            child: CharacteresListFilmsView(filmID));
+                        }).toList()
                       ),
                     ),
                   ],

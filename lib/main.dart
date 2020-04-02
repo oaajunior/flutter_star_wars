@@ -1,8 +1,9 @@
-import './screen/characters/characters_detailed_screen.dart';
-import './onboarding/onboarding_screen.dart';
-import './screen/tab_screen.dart';
-import './screen/films/films_detailed_screen.dart';
 import 'package:flutter/material.dart';
+import './view/onboarding/onboarding_view.dart';
+import './view/characters/characters_detail_view.dart';
+import './view/main_view.dart';
+import 'view/films/film_detail_view.dart';
+
 
 main() => runApp(StarWarsApp());
 
@@ -18,16 +19,15 @@ class _StarWarsAppState extends State<StarWarsApp> {
       title: 'Star Wars',
       theme: ThemeData(
         primaryColor: Colors.black,
-        //primarySwatch: Colors.black,
         accentColor: Colors.white,
-        //canvasColor: Color.fromRGBO(51, 51, 255, 1),
       ),
       debugShowCheckedModeBanner: false,
+      initialRoute: '/',
       routes: {
-        '/': (ctx) => OnboardingScreen(),
-        TabsScreen.routeName: (ctx) => TabsScreen(),
-        DetailedFilmScreen.routeName: (ctx) => DetailedFilmScreen(),
-        CharacterDetailedScreen.routeName: (ctx) => CharacterDetailedScreen(),
+        '/': (ctx) => OnboardingView(),
+        MainView.routeName: (ctx) => MainView(),
+        FilmDetailView.routeName: (ctx) => FilmDetailView(),
+        CharacterDetailView.routeName: (ctx) => CharacterDetailView(),
       },
     );
   }

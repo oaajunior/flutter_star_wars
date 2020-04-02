@@ -1,4 +1,4 @@
-class CharactersAllResponse{
+class CharactersModel{
   String id;
   String name;
   String height;
@@ -10,7 +10,7 @@ class CharactersAllResponse{
   List<int> films;
   String imageNetwork;
 
-  CharactersAllResponse.fromMappedJson(Map<String, dynamic> json) {
+  CharactersModel.fromMappedJson(Map<String, dynamic> json) {
     
     name = json['name'] ?? "";
     height = json['height'] ?? "";

@@ -1,4 +1,4 @@
-class FilmsAllResponse{
+class FilmsModel{
   String id;
   String title;
   int episodeId;
@@ -8,9 +8,9 @@ class FilmsAllResponse{
   String episodeIdRoman;
   String imageNetwork;
 
-  FilmsAllResponse.fromMappedJson(Map<String, dynamic> json) {
-    
-    //var results = json['results'];
+  FilmsModel();
+
+  FilmsModel.fromMappedJsonAll(Map<String, dynamic> json) {
     title = json['title'] ?? "";
     episodeId = json['episode_id'] ?? 0;
     openingCrawl = json['opening_crawl'] ?? "";
@@ -18,5 +18,10 @@ class FilmsAllResponse{
     releaseDate = json['release_date'] ?? "";
 
   }
+   FilmsModel.fromMappedJson(Map<String, dynamic> json) {
+    title = json['title'] ?? "";
+    episodeId = json['episode_id'] ?? 0;
+  }
+
 }
 

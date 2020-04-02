@@ -1,17 +1,26 @@
-import '../../models/characters_all_response.dart';
 import 'package:flutter/material.dart';
-import 'characters_detailed_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
+import './characters_detail_view.dart';
+import '../../models/characters/characters_model.dart';
 
-class CharactersGridItem extends StatelessWidget {
-  final CharactersAllResponse character;
+class CharactersGridItemView extends StatelessWidget {
+  final CharactersModel character;
 
-  CharactersGridItem(this.character);
+  CharactersGridItemView(this.character);
+
+  void _selectedCharacter(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      CharacterDetailView.routeName,
+      arguments: {
+        character,
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _selectedCharacgter(context),
+      onTap: () => _selectedCharacter(context),
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -40,15 +49,6 @@ class CharactersGridItem extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void _selectedCharacgter(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(
-      CharacterDetailedScreen.routeName,
-      arguments: {
-        character,
-      },
     );
   }
 }

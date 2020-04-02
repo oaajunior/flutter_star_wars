@@ -1,13 +1,14 @@
-import 'package:flutter/rendering.dart';
-import '../../models/films_all_response.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:app_star_wars/utils/util.dart';
+import '../../models/films/films_model.dart';
 
-class DetailedFilmScreen extends StatelessWidget {
+class FilmDetailView extends StatelessWidget {
   static const routeName = '/detailed_film_screen';
+
   @override
   Widget build(BuildContext context) {
-    final Set<FilmsAllResponse> film = ModalRoute.of(context).settings.arguments;
+    final Set<FilmsModel> film = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -22,17 +23,16 @@ class DetailedFilmScreen extends StatelessWidget {
                   padding: EdgeInsets.all(10),
                   width: 200,
                   child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: film.first.imageNetwork,
-                  fit: BoxFit.contain,
-                ),
+                    placeholder: kTransparentImage,
+                    image: film.first.imageNetwork,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 Expanded(
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: 20),
                     alignment: Alignment.centerLeft,
                     height: 250,
-                    //color: Colors.black12,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,9 @@ class DetailedFilmScreen extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        buildText('Release Date: ${_treatDate(film.first.releaseDate)}', 16,
+                        buildText(
+                            'Release Date: ${Util.treatDate(film.first.releaseDate)}',
+                            16,
                             false),
                         SizedBox(
                           height: 5,
@@ -90,11 +92,5 @@ class DetailedFilmScreen extends StatelessWidget {
           fontWeight: bold ? FontWeight.bold : FontWeight.normal),
       // overflow: TextOverflow.fade,
     );
-  }
-
-  String _treatDate(String date){
-
-    var arrayDate = date.split('-');
-    return arrayDate[1] + '-' +arrayDate[2] + '-' + arrayDate[0];
   }
 }

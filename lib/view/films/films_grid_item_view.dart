@@ -1,18 +1,21 @@
-import '../../models/films_all_response.dart';
 import 'package:flutter/material.dart';
-import '../../screen/films/films_detailed_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
+import '../../models/films/films_model.dart';
+import './film_detail_view.dart';
 
-class FilmsGridItem extends StatefulWidget {
-  final FilmsAllResponse film;
+class FilmsGridItemView extends StatelessWidget {
+  final FilmsModel film;
+  FilmsGridItemView(this.film);
 
-  FilmsGridItem(this.film);
+  void _selectedFilm(BuildContext ctx) {
+    Navigator.of(ctx).pushNamed(
+      FilmDetailView.routeName,
+      arguments: {
+        film,
+      },
+    );
+  }
 
-  @override
-  _FilmsGridItemState createState() => _FilmsGridItemState();
-}
-
-class _FilmsGridItemState extends State<FilmsGridItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -31,7 +34,7 @@ class _FilmsGridItemState extends State<FilmsGridItem> {
                 padding: EdgeInsets.all(5),
                 child: FadeInImage.memoryNetwork(
                   placeholder: kTransparentImage,
-                  image: widget.film.imageNetwork,
+                  image: film.imageNetwork,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -39,20 +42,11 @@ class _FilmsGridItemState extends State<FilmsGridItem> {
                   padding: EdgeInsets.all(5),
                   alignment: Alignment.centerLeft,
                   color: Colors.white,
-                  child: Text('Episode ${widget.film.episodeIdRoman}: ${widget.film.title}')),
+                  child: Text('Episode ${film.episodeIdRoman}: ${film.title}')),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  void _selectedFilm(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(
-      DetailedFilmScreen.routeName,
-      arguments: {
-        widget.film,
-      },
     );
   }
 }
