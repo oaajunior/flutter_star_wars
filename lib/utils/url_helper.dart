@@ -1,3 +1,7 @@
+/* 
+** auxiliary class to mount the REST API url.
+*/
+
 class UrlHelper {
   
   static const String BASE_URL = "https://swapi.co/api/";

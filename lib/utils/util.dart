@@ -1,5 +1,9 @@
 import 'package:app_star_wars/utils/url_helper.dart';
 
+/* 
+** auxiliary class with some usefull functions.
+*/
+
 class Util {
   
   static String convertToRoman(int number) {

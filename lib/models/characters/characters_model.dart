@@ -1,3 +1,6 @@
+/* 
+** class to represent the characters that worked in starwars films.
+*/
 class CharactersModel{
   String id;
   String name;

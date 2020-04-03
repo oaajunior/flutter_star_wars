@@ -3,6 +3,9 @@ import '../../view/main_view.dart';
 import '../../models/onboarding/onboarding_model.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 
+/* 
+** class responsible to create objects with the initial data about the app.
+*/
 class OnboardingListViewModel {
   Iterable<OnboardingViewModel> onboardingListModel;
   final BuildContext context;

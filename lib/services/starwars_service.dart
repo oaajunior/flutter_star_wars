@@ -1,7 +1,9 @@
 import 'package:http/http.dart' as http;
 import '../utils/url_helper.dart';
 
-
+/* 
+** class responsible to access the REST API to get all data's app.
+*/
 abstract class StarWarsService {
   Future<http.Response> fetchAllFilms();
   Future<http.Response> fetchFilmsByID({int id});

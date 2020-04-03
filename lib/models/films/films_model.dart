@@ -1,3 +1,6 @@
+/* 
+** class to represent the starwars films.
+*/
 class FilmsModel{
   String id;
   String title;

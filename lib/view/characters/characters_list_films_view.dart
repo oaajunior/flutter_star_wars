@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 import '../../utils/util.dart';
 
+/* 
+** class responsable to show each films the selected character have been worked.
+*/
 class CharacteresListFilmsView extends StatefulWidget {
   final filmID;
   CharacteresListFilmsView(this.filmID);
@@ -33,7 +36,7 @@ class _CharacteresListFilmsViewState extends State<CharacteresListFilmsView> {
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(2),
+              padding: EdgeInsets.all(5),
               child: viewModel.filmResponse.imageNetwork == null
                   ? Text("")
                   : FadeInImage.memoryNetwork(
@@ -43,11 +46,12 @@ class _CharacteresListFilmsViewState extends State<CharacteresListFilmsView> {
                     ),
             ),
             Container(
+              padding: EdgeInsets.all(5),
               color: Colors.white,
               child: Text(
                 "Episode ${viewModel.filmResponse.episodeId == null ? '' : Util.convertToRoman(viewModel.filmResponse.episodeId)}: ${viewModel.filmResponse.title == null ? "" : viewModel.filmResponse.title}",
                 style: TextStyle(
-                  fontSize: 11,
+                  fontSize: 14,
                 ),
               ),
             ),

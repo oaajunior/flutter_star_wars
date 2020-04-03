@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './films_grid_item_view.dart';
 
+/* 
+** main class to show all films.
+*/
 class FilmsGridView extends StatefulWidget {
   final filter;
   FilmsGridView(this.filter);
@@ -16,6 +19,7 @@ class FilmsGridView extends StatefulWidget {
 class _FilmsGridViewState extends State<FilmsGridView> {
   bool isAllFilmsShowed = true;
 
+  //initState is responsable to get the initial films data and register the controller search.
   @override
   void initState() {
     final viewModel = Provider.of<FilmsViewModel>(context, listen: false);
@@ -25,6 +29,7 @@ class _FilmsGridViewState extends State<FilmsGridView> {
     super.initState();
   }
 
+//function responsible to make searches.
   void listenSearch(FilmsViewModel vm) {
     widget.filter.addListener(() {
       if (widget.filter.text != null &&
@@ -38,7 +43,8 @@ class _FilmsGridViewState extends State<FilmsGridView> {
       }
     });
   }
-
+  
+//build function that show the relatively widget, according the REST API status code.
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<FilmsViewModel>(context);
@@ -73,8 +79,14 @@ class _FilmsGridViewState extends State<FilmsGridView> {
             mainAxisSpacing: 10,
           ),
         );
+      case LoadingStatus.error:
+        return Align(
+          child: Text("There was a network error."),
+        );
       default:
-        return Text("There was an error to process the request.");
+        return Align(
+          child: Text("There was an error to process the request."),
+        );
     }
   }
 }

@@ -3,6 +3,9 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:app_star_wars/utils/util.dart';
 import '../../models/films/films_model.dart';
 
+/* 
+** class responsible to show detailed information about the selected film.
+*/
 class FilmDetailView extends StatelessWidget {
   static const routeName = '/detailed_film_screen';
 
@@ -83,14 +86,13 @@ class FilmDetailView extends StatelessWidget {
       ),
     );
   }
-
+//auxiliary function to show some information about the film.
   Text buildText(String text, double fontSize, bool bold) {
     return Text(
       '$text',
       style: TextStyle(
           fontSize: fontSize,
           fontWeight: bold ? FontWeight.bold : FontWeight.normal),
-      // overflow: TextOverflow.fade,
     );
   }
 }

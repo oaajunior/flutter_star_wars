@@ -5,6 +5,9 @@ import 'films/films_grid_view.dart';
 import '../view_model/characters/characters_view_model.dart';
 import '../view_model/films/films_view_model.dart';
 
+/* 
+** main view class of all app. This class show tab's options Films and Characters.
+*/
 class MainView extends StatefulWidget {
   static const routeName = '/tab_screen';
 
@@ -20,6 +23,7 @@ class _MainViewState extends State<MainView> {
   Icon _searchIcon = Icon(Icons.search);
   Widget _appBarTitle = Text("Films");
 
+//initState function is responsible first initialize the tabs options Films and Characters.
   @override
   void initState() {
     super.initState();
@@ -41,6 +45,7 @@ class _MainViewState extends State<MainView> {
     ];
   }
 
+//function to show how tab was selected.
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -53,6 +58,7 @@ class _MainViewState extends State<MainView> {
     });
   }
 
+//function to make the searches.
   void _searchPressed() {
     setState(() {
       if (_searchIcon.icon == Icons.search) {
@@ -71,6 +77,7 @@ class _MainViewState extends State<MainView> {
           _pages[_selectedPageIndex]['title'] as String,
           style: TextStyle(
             color: Colors.white,
+            fontSize: 20,
           ),
         );
         _filter.clear();
@@ -78,12 +85,14 @@ class _MainViewState extends State<MainView> {
     });
   }
   
+  ///function to eliminate the filter when it is been not used.
   @override
   void dispose() {
     _filter.dispose();
     super.dispose();
   }
 
+//build function to show the main view.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

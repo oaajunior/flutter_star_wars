@@ -5,7 +5,9 @@ import 'package:transparent_image/transparent_image.dart';
 import './characters_list_films_view.dart';
 import '../../models/characters/characters_model.dart';
 
-
+/* 
+** class responsible to show detailed information about the selected character.
+*/
 class CharacterDetailView extends StatelessWidget {
   static const routeName = '/characters_detailed_screen';
 
@@ -75,10 +77,10 @@ class CharacterDetailView extends StatelessWidget {
             SingleChildScrollView(
               child: Container(
                 alignment: Alignment.topCenter,
-                margin: EdgeInsets.all(10),
+                margin: EdgeInsets.all(5),
                 width: double.infinity,
                 //color: Colors.black54,
-                height: 270,
+                height: 380,
                 child: Column(
                   children: [
                     Text(
@@ -91,14 +93,14 @@ class CharacterDetailView extends StatelessWidget {
                       textAlign: TextAlign.justify,
                     ),
                     Container(
-                      height: 180,
+                      height: 300,
                       padding: EdgeInsets.all(5),
                       child: GridView.count(
-                        crossAxisCount: 4,
-                        crossAxisSpacing: 4,
-                        mainAxisSpacing: 4,
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 2,
                         childAspectRatio: 1 / 1.8,  
-                        padding: EdgeInsets.all(8),
+                        padding: EdgeInsets.all(5),
                         children: character.first.films.map((filmID) {
                           return ListenableProvider(
                             create: (context) => CharactersListFilmsViewModel(),
@@ -116,13 +118,13 @@ class CharacterDetailView extends StatelessWidget {
     );
   }
 
+//auxiliary function to show some information about the characters.
   Text buildText(String text, double fontSize, bool bold) {
     return Text(
       '$text',
       style: TextStyle(
           fontSize: fontSize,
           fontWeight: bold ? FontWeight.bold : FontWeight.normal),
-      // overflow: TextOverflow.fade,
     );
   }
 }

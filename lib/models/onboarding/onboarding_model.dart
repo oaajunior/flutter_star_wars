@@ -1,6 +1,9 @@
 import "package:flutter/cupertino.dart";
 import 'package:flutter/material.dart';
 
+/* 
+** class to represent the initial informations about the app.
+*/
 class OnboardingModel {
   String mainTitle;
   String secondaryTitle;

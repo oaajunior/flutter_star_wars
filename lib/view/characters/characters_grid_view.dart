@@ -4,6 +4,10 @@ import './characters_grid_item_view.dart';
 import '../../utils/loading_status.dart';
 import '../../view_model/characters/characters_view_model.dart';
 
+/* 
+** main class to show all characters.
+*/
+
 class CharactersGridView extends StatefulWidget {
   final filter;
   CharactersGridView(this.filter);
@@ -15,6 +19,9 @@ class CharactersGridView extends StatefulWidget {
 class _CharactersGridViewState extends State<CharactersGridView> {
   ScrollController _controller = ScrollController();
   bool isAllCharactersShowed = true;
+  
+  //initState is responsible to get the initial characters data and register the controller
+  //to control previous and next pages and search.
   @override
   initState() {
     super.initState();
@@ -40,12 +47,14 @@ class _CharactersGridViewState extends State<CharactersGridView> {
     });
   }
 
+//function to eliminate the controller when it is been not used.
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
   }
 
+//function responsible to make searches.
   void listenSearch(CharactersViewModel vm) {
     widget.filter.addListener(() {
       if (widget.filter.text != null &&
@@ -60,7 +69,7 @@ class _CharactersGridViewState extends State<CharactersGridView> {
       }
     });
   }
-
+//build function that show the relatively widget, according the REST API status code.
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<CharactersViewModel>(context);
@@ -93,8 +102,14 @@ class _CharactersGridViewState extends State<CharactersGridView> {
             return CharactersGridItemView(viewModel.dataSource[index]);
           },
         );
-        default:
-        return Text("There was an error to process the request.");
+      case LoadingStatus.error:
+        return Align(
+          child: Text("There was a network error."),
+        );
+      default:
+        return Align(
+          child: Text("There was an error to process the request."),
+        );
     }
   }
 }

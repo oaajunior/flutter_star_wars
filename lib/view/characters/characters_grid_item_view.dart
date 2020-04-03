@@ -3,11 +3,16 @@ import 'package:transparent_image/transparent_image.dart';
 import './characters_detail_view.dart';
 import '../../models/characters/characters_model.dart';
 
+/* 
+** auxiliary class to show each characters.
+*/
 class CharactersGridItemView extends StatelessWidget {
   final CharactersModel character;
 
   CharactersGridItemView(this.character);
 
+//function to call the screen responsible to show detailed information
+//about the selected character.
   void _selectedCharacter(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
       CharacterDetailView.routeName,
@@ -17,6 +22,7 @@ class CharactersGridItemView extends StatelessWidget {
     );
   }
 
+//build function to show each character.
   @override
   Widget build(BuildContext context) {
     return InkWell(

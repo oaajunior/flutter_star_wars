@@ -4,7 +4,9 @@ import './view/characters/characters_detail_view.dart';
 import './view/main_view.dart';
 import 'view/films/film_detail_view.dart';
 
-
+/* 
+** main class of all app.
+*/
 main() => runApp(StarWarsApp());
 
 class StarWarsApp extends StatefulWidget {

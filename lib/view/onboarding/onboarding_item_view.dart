@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 
-class OnboardingViewWidget extends StatelessWidget {
+/* 
+** auxiliary class to show initial information about the app.
+*/
+class OnboardingItemView extends StatelessWidget {
   final OnboardingViewModel viewModelAdapter;
 
-  OnboardingViewWidget(this.viewModelAdapter);
+  OnboardingItemView(this.viewModelAdapter);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class OnboardingViewWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
+                      padding: EdgeInsets.only(
                         top: 10,
                         bottom: 80,
                       ),
@@ -52,9 +55,24 @@ class OnboardingViewWidget extends StatelessWidget {
                       ),
                     ),
                     viewModelAdapter.shouldPresentButton
-                        ? FlatButton(
-                            child: Text(viewModelAdapter.buttonTitle),
-                            color: Colors.white,
+                        ? RaisedButton(
+                            padding: EdgeInsets.all(0),
+                            child: Container(
+                              padding: EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Color(0xFF521203),
+                                    Color(0xFF8c0606),
+                                  ],
+                                ),
+                              ),
+                              child: Text(
+                                viewModelAdapter.buttonTitle,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                            textColor: Colors.white,
                             onPressed: () {
                               viewModelAdapter.onButtonPressed(context);
                             })
