@@ -8,10 +8,8 @@ import '../../view_model/onboarding/onboarding_view_model.dart';
 */
 class OnboardingListViewModel {
   Iterable<OnboardingViewModel> onboardingListModel;
-  final BuildContext context;
-  OnboardingListViewModel(this.context);
 
-  OnboardingListViewModel.build(this.context) {
+  OnboardingListViewModel.build(BuildContext context) {
     onboardingListModel = [
       OnboardingModel(
         mainTitle: "Star Wars App",

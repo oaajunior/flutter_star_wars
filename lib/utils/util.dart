@@ -5,7 +5,6 @@ import 'package:app_star_wars/utils/url_helper.dart';
 */
 
 class Util {
-  
   static String convertToRoman(int number) {
     switch (number) {
       case 1:
@@ -30,20 +29,36 @@ class Util {
         return 'VII';
         break;
       default:
-        return number.toString();
+        return number != null ? number.toString() : '';
     }
   }
 
   static String coverImageID({String id}) {
-    return "$id.jpg";
-  }
-  
-  static String networkImageID({String type, String id}) {
-    return UrlHelper.fromURLImage("$type$id.jpg");
+    return (id != null && id != "") ? "$id.jpg" : "";
   }
 
-  static String treatDate(String date){
+  static String networkImageID({String type, String id}) {
+    var resultId = coverImageID(id: id);
+    return UrlHelper.fromURLImage(
+        ((type != null && type != "") && (resultId != null && resultId != ""))
+            ? "$type/$resultId"
+            : "");
+  }
+
+  static String treatDate(String date) {
+    if (date == null || !date.contains('-')) {
+      return '';
+    }
     var arrayDate = date.split('-');
-    return arrayDate[1] + '-' +arrayDate[2] + '-' + arrayDate[0];
+    return arrayDate[1] + '-' + arrayDate[2] + '-' + arrayDate[0];
+  }
+
+  static String extractID(String url) {
+    if (!url.contains("/")) {
+      return null;
+    }
+    var split = url.toString().split("/");
+    split.removeLast();
+    return split.last;
   }
 }

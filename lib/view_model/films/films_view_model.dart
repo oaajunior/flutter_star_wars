@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../services/starwars_service.dart';
 import '../../utils/util.dart';
@@ -10,21 +9,20 @@ import '../../utils/loading_status.dart';
 */
 class FilmsViewModel extends ChangeNotifier {
   List<FilmsModel> dataSource = [];
-  String searchName = "";
-  bool searchFilm = false;
-  final StarWarsService service = StarWarsServiceImpl();
-  var loadingStatus = LoadingStatus.searching;
+  StarWarsService service = StarWarsServiceImpl();
+  var loadingStatus = LoadingStatus.loading;
 
-//function responsible to fetch data from the REST API and notify the view 
+//function responsible to fetch data from the REST API and notify the view
 //when have been finished.
   Future<void> feedDataSource({String searchName = ""}) async {
-    final response = (searchName != null && searchName.isNotEmpty)
-        ? await service.fetchFilmsBySearch(name: searchName)
-        : await service.fetchAllFilms();
-    if (response.statusCode == 200) {
-      var json = jsonDecode(response.body);
+    try {
+      loadingStatus = LoadingStatus.loading;
+      final response = (searchName != null && searchName.isNotEmpty)
+          ? await service.fetchFilmsBySearch(name: searchName)
+          : await service.fetchAllFilms();
+
       List<FilmsModel> filmsList = [];
-      Iterable list = json["results"];
+      Iterable list = response["results"];
 
       if (list != null && list.isNotEmpty) {
         loadingStatus = LoadingStatus.completed;
@@ -36,25 +34,30 @@ class FilmsViewModel extends ChangeNotifier {
               Util.convertToRoman(filmResponse.episodeId);
 
           if (film["url"] != null) {
-            List<String> split;
-            split = film["url"].toString().split("/");
-            split.removeLast();
-            filmResponse.id = split.last;
+            //method to extract the ID from the url.
+            var id = Util.extractID(film["url"]);
+
             filmResponse.imageNetwork =
-                Util.networkImageID(type: "films/", id: split.last);
+                Util.networkImageID(type: "films", id: id);
           }
           filmsList.add(filmResponse);
         }
-        filmsList.sort((a, b) => a.episodeId.compareTo(b.episodeId));
+        orderListFilms(filmsList);
         dataSource = filmsList;
       } else {
         dataSource = [];
         loadingStatus = LoadingStatus.empty;
       }
-    } else {
+    } catch (error) {
       dataSource = [];
       loadingStatus = LoadingStatus.error;
+      print(error);
     }
     notifyListeners();
+  }
+
+  void orderListFilms(List<FilmsModel> list) {
+    if (list != null && list.isNotEmpty)
+      list.sort((a, b) => a.episodeId.compareTo(b.episodeId));
   }
 }

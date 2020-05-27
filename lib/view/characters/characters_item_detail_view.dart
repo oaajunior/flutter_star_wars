@@ -1,21 +1,19 @@
-import 'package:app_star_wars/view_model/characters/characters_list_films_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
+import '../../view_model/characters/characters_list_films_view_model.dart';
 import './characters_list_films_view.dart';
-import '../../models/characters/characters_model.dart';
 
 /* 
 ** class responsible to show detailed information about the selected character.
 */
-class CharacterDetailView extends StatelessWidget {
+class CharactersItemDetailView extends StatelessWidget {
+  final character;
+  CharactersItemDetailView({this.character});
   static const routeName = '/characters_detailed_screen';
 
   @override
   Widget build(BuildContext context) {
-    final Set<CharactersModel> character =
-        ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(character.first.name),
@@ -28,11 +26,11 @@ class CharacterDetailView extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(10),
                   width: 200,
-                  child:FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: character.first.imageNetwork,
-                  fit: BoxFit.contain,
-                ),
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: character.first.imageNetwork,
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 Expanded(
                   child: Container(
@@ -51,11 +49,13 @@ class CharacterDetailView extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        buildText('Eye Color: ${character.first.eyeColor}', 16, false),
+                        buildText('Eye Color: ${character.first.eyeColor}', 16,
+                            false),
                         SizedBox(
                           height: 5,
                         ),
-                        buildText('Hair Color: ${character.first.hairColor}', 16, false),
+                        buildText('Hair Color: ${character.first.hairColor}',
+                            16, false),
                         SizedBox(
                           height: 5,
                         ),
@@ -64,7 +64,8 @@ class CharacterDetailView extends StatelessWidget {
                         SizedBox(
                           height: 5,
                         ),
-                        buildText('Mass: ${character.first.mass} kg', 16, false),
+                        buildText(
+                            'Mass: ${character.first.mass} kg', 16, false),
                         SizedBox(
                           height: 5,
                         ),
@@ -96,17 +97,17 @@ class CharacterDetailView extends StatelessWidget {
                       height: 300,
                       padding: EdgeInsets.all(5),
                       child: GridView.count(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 2,
-                        mainAxisSpacing: 2,
-                        childAspectRatio: 1 / 1.8,  
-                        padding: EdgeInsets.all(5),
-                        children: character.first.films.map((filmID) {
-                          return ListenableProvider(
-                            create: (context) => CharactersListFilmsViewModel(),
-                            child: CharacteresListFilmsView(filmID));
-                        }).toList()
-                      ),
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 2,
+                          mainAxisSpacing: 2,
+                          childAspectRatio: 1 / 1.8,
+                          padding: EdgeInsets.all(5),
+                          children: character.first.films.map<Widget>((filmID) {
+                            return ListenableProvider(
+                                create: (context) =>
+                                    CharactersListFilmsViewModel(),
+                                child: CharacteresListFilmsView(filmID));
+                          }).toList()),
                     ),
                   ],
                 ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../view_model/onboarding/onboarding_view_model.dart';
 
 /* 
-** auxiliary class to show initial information about the app.
+** auxiliary class shows initial information about the app.
 */
 class OnboardingItemView extends StatelessWidget {
   final OnboardingViewModel viewModelAdapter;
@@ -56,6 +56,7 @@ class OnboardingItemView extends StatelessWidget {
                     ),
                     viewModelAdapter.shouldPresentButton
                         ? RaisedButton(
+                            key: Key("button"),
                             padding: EdgeInsets.all(0),
                             child: Container(
                               padding: EdgeInsets.all(10.0),

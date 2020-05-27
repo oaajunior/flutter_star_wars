@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import '../../services/starwars_service.dart';
 import '../../models/characters/characters_model.dart';
 import '../../utils/loading_status.dart';
@@ -9,82 +8,90 @@ import '../../utils/util.dart';
 ** class responsible to get data from the model and deal with the view request and search to characters.
 */
 class CharactersViewModel extends ChangeNotifier {
-  final StarWarsService service = StarWarsServiceImpl();
+  StarWarsService service = StarWarsServiceImpl();
   var nextPage = "";
   var previousPage = "";
   var isNextPage = true;
-  var isPreviousPage = false;
   List<CharactersModel> dataSource = [];
-  var loadingStatus = LoadingStatus.searching;
+  var loadingStatus = LoadingStatus.loading;
 
-//function responsible to fetch data from the REST API and notify the view 
-//when have been finished.
-  Future<void> feedDataSource(ScrollController controller,
-      {String searchCharacter = ""}) async {
-    loadingStatus = LoadingStatus.searching;
-    if (isPreviousPage && previousPage != null) {
-      nextPage = previousPage;
-    }
-
-    final response = (searchCharacter != null && searchCharacter.isNotEmpty)
-        ? await service.fetchCharactersBySearch(name: searchCharacter)
-        : await service.fetchAllCharacters(page: nextPage);
-
-    if (response.statusCode == 200) {
-      var json = jsonDecode(response.body);
-
-      if (json["next"] != null && !json["next"].toString().contains("search")) {
-        var pageAdress = json["next"];
-        var split = pageAdress.toString().split("/");
-        nextPage = split.last;
+//function responsible to fetch data from the REST API and notify the view
+//when it have been finished.
+  Future<void> feedDataSource({String searchCharacter = ""}) async {
+    try {
+      loadingStatus = LoadingStatus.loading;
+      if (!isNextPage && previousPage != null) {
+        nextPage = previousPage;
       }
 
-      if (json["previous"] != null &&
-          !json["previous"].toString().contains("search")) {
-        var pageAdress = json["previous"];
-        var split = pageAdress.toString().split("/");
-        previousPage = split.last;
-      }
+      final response = (searchCharacter != null && searchCharacter.isNotEmpty)
+          ? await service.fetchCharactersBySearch(name: searchCharacter)
+          : await service.fetchAllCharacters(page: nextPage);
+
+      nextPage = checkPreviousOrNextPage(response, "next", nextPage);
+      previousPage =
+          checkPreviousOrNextPage(response, "previous", previousPage);
 
       List<CharactersModel> charactersList = [];
-      Iterable list = json["results"];
+      Iterable list = response["results"];
 
       if (list != null && list.isNotEmpty) {
-        loadingStatus = LoadingStatus.completed;
         for (var character in list) {
           var characterResponse = CharactersModel.fromMappedJson(character);
 
           if (character["url"] != null) {
-            List<String> split;
-            split = character["url"].toString().split("/");
-            split.removeLast();
-            characterResponse.id = split.last;
-            characterResponse.imageNetwork =
-                Util.networkImageID(type: "characters/", id: split.last);
+            var id = Util.extractID(character["url"]);
+
+            if (id != null) {
+              characterResponse.id = id;
+              characterResponse.imageNetwork =
+                  Util.networkImageID(type: "characters/", id: id);
+            }
           }
 
           characterResponse.films = [];
           if (character["films"] != null) {
             for (var film in character["films"]) {
-              List<String> split;
-              split = film.toString().split("/");
-              split.removeLast();
+              var id = Util.extractID(film);
 
-              characterResponse.films.add(int.parse(split.last));
+              if (id != null) characterResponse.films.add(int.parse(id));
             }
+            characterResponse.films.sort();
           }
           charactersList.add(characterResponse);
         }
+        //The next if statement is a workaround because in the last page there are
+        //just 2 characters and the scroll in that screen does not work. So, it was added
+        //more 2 items to allow the screen scrolling.
+        if (charactersList.length <= 2) {
+          charactersList.add(CharactersModel());
+          charactersList.add(CharactersModel());
+        }
+        loadingStatus = LoadingStatus.completed;
         dataSource = charactersList;
-        if (controller.hasClients) controller.jumpTo(0.5);
       } else {
         dataSource = [];
         loadingStatus = LoadingStatus.empty;
       }
-    } else {
+    } catch (error) {
       dataSource = [];
       loadingStatus = LoadingStatus.error;
+      print(error);
     }
     notifyListeners();
+  }
+
+  //Function to check if there are next or previous page in the Characters list.
+  String checkPreviousOrNextPage(
+      dynamic response, String checkPage, String actualPage) {
+    var page = actualPage;
+
+    if (response[checkPage] != null &&
+        !response[checkPage].toString().contains("search")) {
+      var pageAdress = response[checkPage];
+      var split = pageAdress.toString().split("/");
+      page = split.last;
+    }
+    return page;
   }
 }

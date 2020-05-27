@@ -1,14 +1,16 @@
-//import 'package:app_star_wars/utils/loading_status.dart';
-import 'package:app_star_wars/utils/loading_status.dart';
-import 'package:app_star_wars/view_model/films/films_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './films_grid_item_view.dart';
+import '../../utils/loading_status.dart';
+import '../../view_model/films/films_view_model.dart';
+import './films_item_view.dart';
 
 /* 
 ** main class to show all films.
 */
 class FilmsGridView extends StatefulWidget {
+  static const routeName = '/films_grid_view';
+  final key = Key(routeName);
+
   final filter;
   FilmsGridView(this.filter);
 
@@ -34,8 +36,8 @@ class _FilmsGridViewState extends State<FilmsGridView> {
     widget.filter.addListener(() {
       if (widget.filter.text != null &&
           widget.filter.text.toString().trim().isNotEmpty) {
-        var filmeName = widget.filter.text.toString().toLowerCase();
-        vm.feedDataSource(searchName: filmeName);
+        var filmName = widget.filter.text.toString().toLowerCase();
+        vm.feedDataSource(searchName: filmName);
         isAllFilmsShowed = false;
       } else if (widget.filter.selection.baseOffset < 0 && !isAllFilmsShowed) {
         vm.feedDataSource();
@@ -43,14 +45,14 @@ class _FilmsGridViewState extends State<FilmsGridView> {
       }
     });
   }
-  
+
 //build function that show the relatively widget, according the REST API status code.
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<FilmsViewModel>(context);
 
     switch (viewModel.loadingStatus) {
-      case LoadingStatus.searching:
+      case LoadingStatus.loading:
         return Align(
           child: CircularProgressIndicator(
             backgroundColor: Colors.red,
@@ -64,10 +66,11 @@ class _FilmsGridViewState extends State<FilmsGridView> {
 
       case LoadingStatus.completed:
         return GridView(
+          key: Key('films_grid_view'),
           padding: EdgeInsets.all(10),
           children: viewModel.dataSource
               .map(
-                (filmData) => FilmsGridItemView(
+                (filmData) => FilmsItemView(
                   filmData,
                 ),
               )

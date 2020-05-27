@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import '../utils/url_helper.dart';
 
@@ -5,42 +7,73 @@ import '../utils/url_helper.dart';
 ** class responsible to access the REST API to get all data's app.
 */
 abstract class StarWarsService {
-  Future<http.Response> fetchAllFilms();
-  Future<http.Response> fetchFilmsByID({int id});
-  Future<http.Response> fetchFilmsBySearch({String name});
-  Future<http.Response> fetchCharactersBySearch({String name});
-  Future<http.Response> fetchAllCharacters({String page});
-  Future<http.Response> fetchCharacterID({String id});
+  Future<dynamic> fetchAllFilms();
+  Future<dynamic> fetchFilmsByID({int id});
+  Future<dynamic> fetchFilmsBySearch({String name});
+  Future<dynamic> fetchCharactersBySearch({String name});
+  Future<dynamic> fetchAllCharacters({String page});
 }
 
 class StarWarsServiceImpl implements StarWarsService {
   @override
-  Future<http.Response> fetchAllFilms() {
-    return http.get(UrlHelper.formURL("films/"));
-  }
-  @override
-  Future<http.Response> fetchFilmsByID({int id}) {
-    return http.get(UrlHelper.formURL("films/${id.toString()}/"));
+  Future<dynamic> fetchAllFilms() async {
+    var json;
+    final response = await http.get(UrlHelper.fromURL("films/"));
+    if (response != null && response.statusCode == 200) {
+      json = jsonDecode(response.body);
+    } else {
+      throw Exception('There was an error in the server response.');
+    }
+
+    return json;
   }
 
   @override
-  Future<http.Response> fetchAllCharacters({String page}) {
-    return http.get(UrlHelper.formURL("people/$page"));
+  Future<dynamic> fetchFilmsByID({int id}) async {
+    var json;
+    final response =
+        await http.get(UrlHelper.fromURL("films/${id.toString()}/"));
+    if (response != null && response.statusCode == 200) {
+      json = jsonDecode(response.body);
+    } else {
+      throw Exception('There was an error in the server response.');
+    }
+    return json;
   }
 
   @override
-  Future<http.Response> fetchCharacterID({String id}) {
-    return http.get(UrlHelper.formURL("people/$id/"));
+  Future<dynamic> fetchAllCharacters({String page}) async {
+    var json;
+    final response = await http.get(UrlHelper.fromURL("people/$page"));
+    if (response != null && response.statusCode == 200) {
+      json = jsonDecode(response.body);
+    } else {
+      throw Exception('There was an error in the server response.');
+    }
+    return json;
   }
 
   @override
-  Future<http.Response> fetchFilmsBySearch({String name}) {
-    return http.get(UrlHelper.formURL("films/?search=$name"));
+  Future<dynamic> fetchFilmsBySearch({String name}) async {
+    var json;
+    final response = await http.get(UrlHelper.fromURL("films/?search=$name"));
+    if (response != null && response.statusCode == 200) {
+      json = jsonDecode(response.body);
+    } else {
+      throw Exception('There was an error in the server response.');
+    }
+    return json;
   }
 
   @override
-  Future<http.Response> fetchCharactersBySearch({String name}) {
-    return http.get(UrlHelper.formURL("people/?search=$name"));
+  Future<dynamic> fetchCharactersBySearch({String name}) async {
+    var json;
+    final response = await http.get(UrlHelper.fromURL("people/?search=$name"));
+    if (response != null && response.statusCode == 200) {
+      json = jsonDecode(response.body);
+    } else {
+      throw Exception('There was an error in the server response.');
+    }
+    return json;
   }
-
 }

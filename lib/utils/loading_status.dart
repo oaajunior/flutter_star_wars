@@ -3,7 +3,7 @@
 */
 
 enum LoadingStatus{
-  searching,
+  loading,
   completed,
   empty,
   error,

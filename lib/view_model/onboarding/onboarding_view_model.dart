@@ -1,4 +1,4 @@
-import 'package:app_star_wars/models/onboarding/onboarding_model.dart';
+import '../../models/onboarding/onboarding_model.dart';
 
 /* 
 ** class responsible to adapt data from the onboarding model.

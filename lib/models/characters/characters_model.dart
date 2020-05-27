@@ -10,9 +10,11 @@ class CharactersModel{
   String skinColor;
   String eyeColor;
   String gender;
-  List<int> films;
   String imageNetwork;
-
+  List<int> films;
+  
+  CharactersModel();
+  
   CharactersModel.fromMappedJson(Map<String, dynamic> json) {
     
     name = json['name'] ?? "";

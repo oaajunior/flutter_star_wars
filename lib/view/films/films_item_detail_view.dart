@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:app_star_wars/utils/util.dart';
-import '../../models/films/films_model.dart';
+import '../../utils/util.dart';
 
 /* 
 ** class responsible to show detailed information about the selected film.
 */
-class FilmDetailView extends StatelessWidget {
+class FilmItemDetailView extends StatelessWidget {
   static const routeName = '/detailed_film_screen';
+  final key = Key(routeName);
+  final film;
+
+  FilmItemDetailView({this.film});
 
   @override
   Widget build(BuildContext context) {
-    final Set<FilmsModel> film = ModalRoute.of(context).settings.arguments;
+    //final Set<FilmsModel> film = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -86,6 +89,7 @@ class FilmDetailView extends StatelessWidget {
       ),
     );
   }
+
 //auxiliary function to show some information about the film.
   Text buildText(String text, double fontSize, bool bold) {
     return Text(

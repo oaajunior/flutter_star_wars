@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import '../../models/films/films_model.dart';
-import './film_detail_view.dart';
+import './films_item_detail_view.dart';
 
 /* 
 ** auxiliary class to show each film.
 */
-class FilmsGridItemView extends StatelessWidget {
+class FilmsItemView extends StatelessWidget {
   final FilmsModel film;
-  FilmsGridItemView(this.film);
+  FilmsItemView(this.film);
 
 //function to call the screen responsible to show detailed information
 //about the selected film.
   void _selectedFilm(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
-      FilmDetailView.routeName,
+      FilmItemDetailView.routeName,
       arguments: {
         film,
       },
