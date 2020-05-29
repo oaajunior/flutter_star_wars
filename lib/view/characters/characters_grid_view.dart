@@ -46,7 +46,7 @@ class _CharactersGridViewState extends State<CharactersGridView> {
     super.initState();
   }
 
-//function to eliminate the controller when it is been not used.
+//function to eliminate the controller when it has been not used.
   @override
   void dispose() {
     super.dispose();
@@ -69,6 +69,7 @@ class _CharactersGridViewState extends State<CharactersGridView> {
     });
   }
 
+//function responsible to scroll a little a new page
   void jumpTopScreen(ScrollController controller) {
     if (controller.hasClients) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -78,7 +79,7 @@ class _CharactersGridViewState extends State<CharactersGridView> {
     }
   }
 
-//build function that show the relatively widget, according the REST API status code.
+//build function that show the relative widget, according the REST API status code.
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<CharactersViewModel>(context);

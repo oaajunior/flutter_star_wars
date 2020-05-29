@@ -14,8 +14,6 @@ class FilmItemDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final Set<FilmsModel> film = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(film.first.title),

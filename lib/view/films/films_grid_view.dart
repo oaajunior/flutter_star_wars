@@ -46,7 +46,7 @@ class _FilmsGridViewState extends State<FilmsGridView> {
     });
   }
 
-//build function that show the relatively widget, according the REST API status code.
+//build function that show the relative widget, according the REST API status code.
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<FilmsViewModel>(context);

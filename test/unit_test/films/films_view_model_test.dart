@@ -32,7 +32,7 @@ main() {
       expect(viewModel.dataSource.length, 3);
     });
 
-    test('Testing searching state with mocked network', () {
+    test('Testing loading state with mocked network', () {
       viewModel = FilmsViewModel();
       viewModel.service = MockedStarWarsService();
       viewModel.feedDataSource();

@@ -50,7 +50,7 @@ class _MainViewState extends State<MainView> {
     ];
   }
 
-//function to show how tab was selected.
+//function to show which tab was selected.
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
